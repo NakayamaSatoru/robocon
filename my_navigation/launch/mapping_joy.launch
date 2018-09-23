@@ -1,0 +1,24 @@
+<launch>
+  <master auto="start"/>
+  <include file="$(find my_navigation)/config/slam_gmapping.xml"/>
+
+  <node  name="robocon_odom" pkg="robocon_odom" type="robocon_odom"/>
+  <node  name="robocon_tf"   pkg="robocon_tf"   type="robocon_tf"/>
+  <node  name="robocon_joy"   pkg="robocon_joy"   type="robocon_joy"/>
+
+  <node  name="joy"   pkg="joy"   type="joy_node"/>
+
+  <node  name="rosserial"  pkg="rosserial_python"  type="serial_node.py">
+    <param name="port" type="str" value="/dev/ttyUSB1"/>
+  </node>
+
+  <node name="rplidarNode"          pkg="rplidar_ros"  type="rplidarNode" output="screen">
+    <param name="serial_port"         type="string" value="/dev/ttyUSB0"/>
+    <param name="serial_baudrate"     type="int"    value="115200"/>
+    <param name="frame_id"            type="string" value="base_laser"/>
+    <param name="inverted"            type="bool"   value="false"/>
+    <param name="angle_compensate"    type="bool"   value="true"/>
+  </node>
+
+   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find my_navigation)/mapping.rviz" />
+</launch>
