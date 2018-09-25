@@ -25,7 +25,8 @@ footprint: [[-0.45, -0.45], [-0.45, 0.45], [0.45, 0.45], [0.45, -0.45]]
 footprint_padding: 0.01
 
 #Cost function parameters
-inflation_radius: 0.55
+#inflation_radius: 0.55
+inflation_radius: 0.20
 cost_scaling_factor: 10.0
 
 #The cost at which a cell is considered an obstacle when a map is read from the map_server
