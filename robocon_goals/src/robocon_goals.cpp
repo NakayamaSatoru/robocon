@@ -17,8 +17,8 @@ int main(int argc, char **argv) {
 
   init_pose.header.stamp = ros::Time::now();
   init_pose.header.frame_id = "map";
-  init_pose.pose.pose.position.x = 0.0;
-  init_pose.pose.pose.position.y = 0.0;
+  init_pose.pose.pose.position.x = 0.18;
+  init_pose.pose.pose.position.y = 1.08;
   init_pose.pose.pose.position.z = 0;
   init_pose.pose.pose.orientation.w = 1.0;
 

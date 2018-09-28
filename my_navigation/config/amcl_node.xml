@@ -1,6 +1,6 @@
 <launch>
 <node pkg="amcl" type="amcl" name="amcl" respawn="true">
-  <remap from="scan" to="base_scan" />
+  <remap from="scan" to="scan_filtered" />
   <!-- Publish scans from best pose at a max of 10 Hz -->
   <param name="odom_model_type" value="omni"/>
   <param name="odom_alpha5" value="0.1"/>
@@ -33,8 +33,8 @@
   <param name="transform_tolerance" value="0.1"/>
   <param name="recovery_alpha_slow" value="0.0"/>
   <param name="recovery_alpha_fast" value="0.0"/>
-  <param name="initial_pose_x" value="12.0" />
-  <param name="initial_pose_y" value="26.0" />
+  <param name="initial_pose_x" value="0.0" />
+  <param name="initial_pose_y" value="0.0" />
   <param name="initial_pose_a" value="0.0" />
   <param name="initial_cov_xx" value="0.5" />
   <param name="initial_cov_yy" value="0.5" />

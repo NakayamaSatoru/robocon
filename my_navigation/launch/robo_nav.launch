@@ -4,29 +4,36 @@
   <include file="$(find my_navigation)/config/move_base.xml"/>
   <include file="$(find my_navigation)/config/amcl_node.xml"/>  
   
-  <node name="map_server" pkg="map_server" type="map_server" args="$(find my_navigation)/map/map.yaml" respawn="false" >
+  <node name="map_server" pkg="map_server" type="map_server" args="$(find my_navigation)/map/robocon3.yaml" respawn="false" >
     <param name="frame_id" value="/odom" />
   </node>
 
-  <node name="robocon_goals" pkg="robocon_goals" type="robocon_goals"/>
-  <node name="robocon_odom"  pkg="robocon_odom"  type="robocon_odom"/>
-  <node name="robocon_tf"    pkg="robocon_tf"    type="robocon_tf"/>
-  <node name="robocon_sensor"    pkg="robocon_sensor"    type="robocon_sensor"/>
+  <node pkg="laser_filters" type="scan_to_scan_filter_chain"
+        name="laser_filter">
+    <rosparam command="load" file="$(find my_navigation)/config/laser_config.yaml" />
+    <!--remap from="scan" to="base_scan" /-->
+  </node>
 
   <!-->
+  <node name="robocon_goals" pkg="robocon_goals" type="robocon_goals"/>
+  <-->
+  <node name="robocon_odom"  pkg="robocon_odom"  type="robocon_odom"/>
+  <node name="robocon_tf"    pkg="robocon_tf"    type="robocon_tf"/>
+  <!-->
+  <node name="robocon_sensor"    pkg="robocon_sensor"    type="robocon_sensor"/>
+  <-->
   <node  name="rosserial"  pkg="rosserial_python"  type="serial_node.py">
     <param name="port" type="str" value="/dev/ttyUSB1"/>
   </node>
 
   <node name="rplidarNode"  pkg="rplidar_ros" type="rplidarNode" output="screen">
-    <remap from="scan" to="base_scan"/>
+    <!--remap from="scan" to="base_scan"/-->
     <param name="serial_port"       type="string" value="/dev/ttyUSB0"/>
     <param name="serial_baudrate"   type="int"    value="115200"/>
     <param name="frame_id"          type="string" value="base_laser"/>
     <param name="inverted"          type="bool"   value="false"/>
     <param name="angle_compensate"  type="bool"   value="true"/>
   </node>
-  <-->
 
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find my_navigation)/single_robot.rviz" />
 </launch>

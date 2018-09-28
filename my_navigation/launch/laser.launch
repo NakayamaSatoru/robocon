@@ -1,18 +1,12 @@
 <launch>
   <master auto="start"/>
-  <include file="$(find my_navigation)/config/slam_gmapping.xml"/>
 
-  <node  name="robocon_odom" pkg="robocon_odom" type="robocon_odom"/>
   <node  name="robocon_tf"   pkg="robocon_tf"   type="robocon_tf"/>
 
-  <node  name="rosserial"  pkg="rosserial_python"  type="serial_node.py">
-    <param name="port" value="/dev/ttyUSB1"/>
-  </node>
-
   <node pkg="laser_filters" type="scan_to_scan_filter_chain"
-        name="laser_filter">
+      name="laser_filter">
     <rosparam command="load" file="$(find my_navigation)/config/laser_config.yaml" />
-    <!--remap from="scan" to="base_scan" /-->
+    <!-- remap from="scan" to="base_scan" / -->
   </node>
 
   <node name="rplidarNode"          pkg="rplidar_ros"  type="rplidarNode" output="screen">
