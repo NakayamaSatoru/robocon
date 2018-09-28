@@ -4,7 +4,9 @@
   <include file="$(find my_navigation)/config/move_base.xml"/>
   <include file="$(find my_navigation)/config/amcl_node.xml"/>  
   
-  <node name="map_server" pkg="map_server" type="map_server" args="$(find my_navigation)/map/map4.yaml" respawn="false" >
+  <arg name="map" default="robocon.yaml"/>
+
+  <node name="map_server" pkg="map_server" type="map_server" args="$(find my_navigation)/map/$(arg map)" respawn="false" >
     <param name="frame_id" value="/odom" />
   </node>
 
@@ -22,13 +24,16 @@
   <!-->
   <node name="robocon_sensor"    pkg="robocon_sensor"    type="robocon_sensor"/>
   <-->
+
+  <arg name="arduino" default="/dev/ttyUSB1"/>
   <node  name="rosserial"  pkg="rosserial_python"  type="serial_node.py">
-    <param name="port" type="str" value="/dev/ttyUSB1"/>
+    <param name="port" type="str" value="$(arg arduino)"/>
   </node>
 
+  <arg name="lidar" default="/dev/ttyUSB0"/>
   <node name="rplidarNode"  pkg="rplidar_ros" type="rplidarNode" output="screen">
     <!--remap from="scan" to="base_scan"/-->
-    <param name="serial_port"       type="string" value="/dev/ttyUSB0"/>
+    <param name="serial_port"       type="string" value="$(arg lidar)"/>
     <param name="serial_baudrate"   type="int"    value="115200"/>
     <param name="frame_id"          type="string" value="base_laser"/>
     <param name="inverted"          type="bool"   value="false"/>
