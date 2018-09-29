@@ -29,14 +29,17 @@ int main(int argc, char **argv) {
   double th = 0.0;
 
   ros::Time current_time, last_time;
-  current_time = ros::Time::now();
-  last_time = ros::Time::now();
+ current_time = ros::Time::now();
+ last_time = ros::Time::now();
+ // current_time = ros::Time(0);
+ // last_time = ros::Time(0);
 
   ros::Rate r(100.0);
   while (n.ok()) {
 
     ros::spinOnce();
     current_time = ros::Time::now();
+    //current_time = ros::Time(0);
 
     double dt = (current_time - last_time).toSec();
     double delta_x = (vx * cos(th) - vy * sin(th)) * dt;
