@@ -1,7 +1,7 @@
 <launch>
   <node pkg="move_base" type="move_base" respawn="false" name="move_base_node" output="screen">
     <!-- ここの周期でいい -->
-    <param name="controller_frequency" value="5.0" />
+    <param name="controller_frequency" value="3.0" />
     <param name="controller_patience" value="3.0" />
 
     <param name="oscillation_timeout" value="5.0" />

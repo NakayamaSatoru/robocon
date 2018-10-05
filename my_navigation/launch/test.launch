@@ -1,0 +1,32 @@
+<launch>
+  <master auto="start"/>
+  <param name="/use_sim_time" value="true"/>
+
+  <include file="$(find my_navigation)/config/move_base.xml"/>
+  <include file="$(find my_navigation)/config/amcl_node.xml"/>  
+  
+  <arg name="map" default="robocon.yaml"/>
+
+  <node name="map_server" pkg="map_server" type="map_server" args="$(find my_navigation)/map/$(arg map)" respawn="false" >
+    <param name="frame_id" value="/odom" />
+  </node>
+
+  <node pkg="laser_filters" type="scan_to_scan_filter_chain"
+        name="laser_filter">
+    <rosparam command="load" file="$(find my_navigation)/config/laser_config.yaml" />
+    <remap from="scan" to="base_scan" />
+  </node>
+
+  <!-->
+  <node name="robocon_goals" pkg="robocon_goals" type="robocon_goals"/>
+  <node name="robocon_odom"  pkg="robocon_odom"  type="robocon_odom"/>
+  <node name="robocon_tf"    pkg="robocon_tf"    type="robocon_tf"/>
+  <-->
+
+  <node pkg="stage_ros" type="stageros" name="stageros" 
+         args="$(find stage_ros)/world/robocon.world" respawn="false" >
+   　　　<param name="base_watchdog_timeout" value="0.2"/>
+  </node>
+
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find my_navigation)/single_robot.rviz" />
+</launch>
